@@ -5,7 +5,8 @@
 	"name": "bone",
 	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Me!"
+		"Dalton Lange",
+		"Milo Rupp"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
@@ -17,30 +18,11 @@
 	"entrypoints": {
 		"main": [
 			{
-				"value": "bone.ExampleMod",
-				"adapter": "kotlin"
-			}
-		],
-		"client": [
-			{
-				"value": "bone.ExampleModClient",
-				"adapter": "kotlin"
-			}
-		],
-		"fabric-datagen": [
-			{
-				"value": "bone.ExampleModDataGenerator",
-				"adapter": "kotlin"
+				"value": "me.woach.bone",
+				"adapter": "default"
 			}
 		]
 	},
-	"mixins": [
-		"bone.mixins.json",
-		{
-			"config": "bone.client.mixins.json",
-			"environment": "client"
-		}
-	],
 	"depends": {
 		"fabricloader": ">=0.14.22",
 		"minecraft": "~1.20.1",
