@@ -1,5 +1,6 @@
 package me.woach.bone;
 
+import me.woach.bone.effects.BoneEffect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,10 @@ public class Bone implements ModInitializer {
     }
 
     public static final Registry<GenericBone> BONE_REGISTRY = FabricRegistryBuilder
-            .createSimple(RegistryKey.ofRegistry(new Identifier("bone", "bone_registry")))
+            .createSimple(GenericBone.class, getId("bone_registry"))
+            .buildAndRegister();
+    public static final Registry<BoneEffect> BONE_EFFECT_REGISTRY = FabricRegistryBuilder
+            .createSimple(BoneEffect.class, getId("bone_effect_registry"))
             .buildAndRegister();
 
     public static final BoneForgeBlock BONE_FORGE_BLOCK = new BoneForgeBlock();
