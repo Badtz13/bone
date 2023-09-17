@@ -11,8 +11,8 @@ import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BoneForgeBlock extends Block {
-    public BoneForgeBlock() {
+public class BoneForge extends Block {
+    public BoneForge() {
         super(FabricBlockSettings.create().strength(4.0f).requiresTool());
     }
 

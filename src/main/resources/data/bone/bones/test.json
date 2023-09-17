@@ -1,0 +1,5 @@
+{
+  "name": "Pig Bone",
+  "effect": "bone:hog",
+  "entity": "minecraft:entities/pig"
+}

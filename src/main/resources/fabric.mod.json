@@ -18,7 +18,7 @@
 	"entrypoints": {
 		"main": [
 			{
-				"value": "me.woach.bone",
+				"value": "me.woach.bone.Bone",
 				"adapter": "default"
 			}
 		]
