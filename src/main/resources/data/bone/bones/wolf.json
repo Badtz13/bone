@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "chance": 0.125,
+    "effect": "bone:hungry",
+    "entity": "minecraft:entities/wolf"
+}

@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "chance": 0.125,
+    "effect": "bone:feline_grace",
+    "entity": "minecraft:entities/ocelot"
+}

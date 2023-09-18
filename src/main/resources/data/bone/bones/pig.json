@@ -1,5 +1,6 @@
 {
-  "name": "Pig Bone",
+  "enabled": true,
+  "chance": 0.125,
   "effect": "bone:hog",
   "entity": "minecraft:entities/pig"
 }

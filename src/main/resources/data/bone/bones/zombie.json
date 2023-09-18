@@ -1,0 +1,6 @@
+{
+    "enabled": true,
+    "chance": 0.125,
+    "effect": "bone:curse_of_the_fallen",
+    "entity": "minecraft:entities/zombie"
+}
