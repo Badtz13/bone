@@ -21,6 +21,12 @@
 				"value": "me.woach.bone.Bone",
 				"adapter": "default"
 			}
+		],
+		"client": [
+			{
+				"value": "me.woach.bone.BoneClient",
+				"adapter": "default"
+			}
 		]
 	},
 	"mixins": [
