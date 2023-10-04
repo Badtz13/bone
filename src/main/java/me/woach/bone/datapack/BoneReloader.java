@@ -3,7 +3,6 @@ package me.woach.bone.datapack;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.woach.bone.Bone;
-import me.woach.bone.datapack.deserializer.BoneDeserializer;
 import me.woach.bone.registries.BoneRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
@@ -30,8 +29,12 @@ public class BoneReloader {
 
                     @Override
                     public void reload(ResourceManager manager) {
-                        BoneRegistry.empty();
-                        Gson gson = new GsonBuilder().registerTypeAdapter(AbstractBone.class, new BoneDeserializer()).create();
+                        if (BoneRegistry.hasBeenLoaded()) {
+                            Bone.LOGGER.error("Bone Registry is only loaded once. " +
+                                    "Please restart your game to see effects.");
+                            return;
+                        }
+                        Gson gson = new GsonBuilder().registerTypeAdapter(AbstractBone.class, new AbstractBone.Deserializer()).create();
 
                         for (Map.Entry<Identifier, Resource> entry :
                                 manager.findResources(RESOURCE_FOLDER, path -> path.toString().endsWith(".json")).entrySet()) {
@@ -39,12 +42,12 @@ public class BoneReloader {
                             Resource resource = entry.getValue();
                             try (Reader r = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
                                AbstractBone bone = gson.fromJson(r, AbstractBone.class);
-                               bone.info();
                                BoneRegistry.register(id, bone);
                             } catch (Exception e) {
                                 Bone.LOGGER.error("Error occured while trying to load bone, " + id + ", skipping: " + e.getMessage());
                             }
                         }
+                        Bone.LOGGER.info("Successfully loaded " + BoneRegistry.size() + " bones.");
                     }
                 }
         );
