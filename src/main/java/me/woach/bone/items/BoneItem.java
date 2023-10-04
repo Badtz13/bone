@@ -12,10 +12,13 @@ public class BoneItem extends Item {
 
     @Override
     public Text getName(ItemStack stack) {
-        if (stack.hasNbt() && stack.getNbt().contains("MobSource")) {
-            String mobKey = "entity.minecraft." + stack.getNbt().getString("MobSource").toLowerCase();
-            String boneKey = "item.minecraft.bone";
-            return Text.translatable(mobKey).append(" ").append(Text.translatable(boneKey));
+        if (stack.hasNbt()) {
+            assert stack.getNbt() != null;
+            if (stack.getNbt().contains("MobSource")) {
+                String mobKey = "entity." + stack.getNbt().getString("MobSource").toLowerCase().replace(":", ".");
+                String boneKey = "item.minecraft.bone";
+                return Text.translatable(mobKey).append(" ").append(Text.translatable(boneKey));
+            }
         }
         return super.getName(stack);
     }

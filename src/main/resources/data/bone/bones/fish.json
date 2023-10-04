@@ -2,5 +2,5 @@
     "enabled": true,
     "chance": 0.125,
     "effect": "bone:swift_stream",
-    "entity": "minecraft:entities/fish"
+    "entity": "minecraft:cod"
 }

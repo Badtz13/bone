@@ -3,7 +3,8 @@
 	"package": "me.woach.bone.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"LootPoolAccessor"
+		"LootPoolAccessor",
+		"EntitiesDropBones"
 	],
 	"injectors": {
 		"defaultRequire": 1

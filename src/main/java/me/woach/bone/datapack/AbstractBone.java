@@ -3,8 +3,6 @@ package me.woach.bone.datapack;
 import com.google.gson.*;
 import me.woach.bone.Bone;
 import me.woach.bone.effects.BoneEffect;
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Type;
@@ -13,10 +11,10 @@ public class AbstractBone {
     private final boolean enabled;
     private final float chance;
     private final BoneEffect effect;
-    private final EntityType<?> dropEntity;
+    private final Identifier dropEntity;
 
     public AbstractBone(boolean enabled, float chance,
-                        BoneEffect effect, EntityType<?> dropEntity) {
+                        BoneEffect effect, Identifier dropEntity) {
         this.enabled = enabled;
         this.chance = chance;
         this.effect = effect;
@@ -24,11 +22,7 @@ public class AbstractBone {
     }
 
     public Identifier getEntityId() {
-        return dropEntity.getLootTableId();
-    }
-    public void info() {
-        Bone.LOGGER.info("Effect: " + effect.getName());
-        Bone.LOGGER.info("Mob: " + dropEntity.getName());
+        return dropEntity;
     }
     public static class Deserializer implements JsonDeserializer<AbstractBone> {
 
@@ -48,8 +42,7 @@ public class AbstractBone {
                 throw new JsonParseException("could not find effect " + effectId);
 
             String entityIdentifier = jsonObject.get("entity").getAsString();
-            EntityType<?> entity = Registries.ENTITY_TYPE.get(Identifier.splitOn(entityIdentifier,
-                    Identifier.NAMESPACE_SEPARATOR));
+            Identifier entity = Identifier.splitOn(entityIdentifier, Identifier.NAMESPACE_SEPARATOR);
 
             return new AbstractBone(enabled, chance, effect, entity);
         }

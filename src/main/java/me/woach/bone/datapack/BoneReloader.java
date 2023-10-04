@@ -29,11 +29,7 @@ public class BoneReloader {
 
                     @Override
                     public void reload(ResourceManager manager) {
-                        if (BoneRegistry.hasBeenLoaded()) {
-                            Bone.LOGGER.error("Bone Registry is only loaded once. " +
-                                    "Please restart your game to see effects.");
-                            return;
-                        }
+                        BoneRegistry.empty();
                         Gson gson = new GsonBuilder().registerTypeAdapter(AbstractBone.class, new AbstractBone.Deserializer()).create();
 
                         for (Map.Entry<Identifier, Resource> entry :
@@ -42,7 +38,7 @@ public class BoneReloader {
                             Resource resource = entry.getValue();
                             try (Reader r = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
                                AbstractBone bone = gson.fromJson(r, AbstractBone.class);
-                               BoneRegistry.register(id, bone);
+                               BoneRegistry.register(bone.getEntityId(), bone);
                             } catch (Exception e) {
                                 Bone.LOGGER.error("Error occured while trying to load bone, " + id + ", skipping: " + e.getMessage());
                             }
