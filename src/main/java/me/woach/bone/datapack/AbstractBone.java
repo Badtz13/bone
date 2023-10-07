@@ -3,17 +3,22 @@ package me.woach.bone.datapack;
 import com.google.gson.*;
 import me.woach.bone.Bone;
 import me.woach.bone.effects.BoneEffect;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.random.Random;
 
 import java.lang.reflect.Type;
+import java.util.function.Consumer;
 
 public class AbstractBone {
     private final boolean enabled;
-    private final float chance;
+    private final int chance;
     private final BoneEffect effect;
     private final Identifier dropEntity;
+    private final Random rng = Random.create();
 
-    public AbstractBone(boolean enabled, float chance,
+    public AbstractBone(boolean enabled, int chance,
                         BoneEffect effect, Identifier dropEntity) {
         this.enabled = enabled;
         this.chance = chance;
@@ -21,9 +26,37 @@ public class AbstractBone {
         this.dropEntity = dropEntity;
     }
 
+    public void tryDrop(Consumer<ItemStack> dropper) {
+        if (!this.isEnabled())
+            return;
+
+        if (!rollChance())
+            return;
+
+        ItemStack boneToDrop = new ItemStack(Bone.BONE_ITEM);
+
+        NbtCompound nbtData = new NbtCompound();
+        nbtData.putString("MobSource", dropEntity.toString());
+
+        boneToDrop.setNbt(nbtData);
+
+        dropper.accept(boneToDrop);
+    }
+
+    private boolean rollChance() {
+        int roll = rng.nextInt(1000);
+
+        Bone.LOGGER.info("Roll was: " + roll + ", Chance was: " + this.chance);
+
+        return roll <= this.chance;
+    }
+
     public Identifier getEntityId() {
         return dropEntity;
     }
+
+    private boolean isEnabled() { return enabled; }
+
     public static class Deserializer implements JsonDeserializer<AbstractBone> {
 
         @Override
@@ -32,9 +65,19 @@ public class AbstractBone {
 
             JsonObject jsonObject = json.getAsJsonObject();
 
-            boolean enabled = jsonObject.get("enabled").getAsBoolean();
+            JsonElement checkEnabled = jsonObject.get("enabled");
+            boolean enabled;
+            if (checkEnabled == null)
+                enabled = true;
+            else
+                enabled = checkEnabled.getAsBoolean();
 
-            float chance = jsonObject.get("chance").getAsFloat();
+            JsonElement checkChance = jsonObject.get("chance");
+            int chance;
+            if (checkChance == null)
+                chance = 125;
+            else
+                chance = checkChance.getAsInt();
 
             String effectId = jsonObject.get("effect").getAsString();
             BoneEffect effect = Bone.BONE_EFFECT_REGISTRY.get(Identifier.splitOn(effectId, Identifier.NAMESPACE_SEPARATOR));

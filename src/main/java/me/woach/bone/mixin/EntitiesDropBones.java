@@ -1,6 +1,5 @@
 package me.woach.bone.mixin;
 
-import me.woach.bone.Bone;
 import me.woach.bone.datapack.AbstractBone;
 import me.woach.bone.registries.BoneRegistry;
 import net.minecraft.entity.Entity;
@@ -8,8 +7,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -42,13 +39,6 @@ public abstract class EntitiesDropBones extends Entity {
         if(bone == null)
             return;
 
-        ItemStack boneToDrop = new ItemStack(Bone.BONE_ITEM);
-
-        NbtCompound nbtData = new NbtCompound();
-        nbtData.putString("MobSource", entityId.toString());
-
-        boneToDrop.setNbt(nbtData);
-
-        this.dropStack(boneToDrop);
+        bone.tryDrop(this::dropStack);
     }
 }
