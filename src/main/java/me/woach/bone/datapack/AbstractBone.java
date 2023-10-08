@@ -26,11 +26,11 @@ public class AbstractBone {
         this.dropEntity = dropEntity;
     }
 
-    public void tryDrop(Consumer<ItemStack> dropper) {
+    public void tryDrop(short lootingLvl, Consumer<ItemStack> dropper) {
         if (!this.isEnabled())
             return;
 
-        if (!rollChance())
+        if (!rollChance(lootingLvl))
             return;
 
         ItemStack boneToDrop = new ItemStack(Bone.BONE_ITEM);
@@ -41,6 +41,14 @@ public class AbstractBone {
         boneToDrop.setNbt(nbtData);
 
         dropper.accept(boneToDrop);
+    }
+
+    private boolean rollChance(short lootingLvl) {
+        for (int i = 0; i < lootingLvl; i++) {
+            if(rollChance())
+                return true;
+        }
+        return false;
     }
 
     private boolean rollChance() {
