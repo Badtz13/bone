@@ -8,14 +8,31 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
 public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     DefaultedList<ItemStack> boneAndTool = DefaultedList.ofSize(2, ItemStack.EMPTY);
 
+    public static final int BONE_SLOT = 1;
+    public static final int TOOL_SLOT = 0;
+
     public BoneForgeBlockEntity(BlockPos pos, BlockState state) {
         super(Bone.BONE_FORGE_BLOCK_ENTITY, pos, state);
+    }
+
+    public boolean isBoneable(ItemStack stack) {
+        return stack.isIn(ItemTags.TOOLS);
+    }
+
+    public boolean isBoneing(ItemStack stack) {
+        return stack.isOf(Bone.BONE_ITEM);
+    }
+
+    @Override
+    public int getMaxCountPerStack() {
+        return 1;
     }
 
     @Override
@@ -53,7 +70,8 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public ItemStack removeStack(int slot, int amount) {
-        ItemStack result = Inventories.splitStack(boneAndTool, slot, amount);
+        ItemStack result = this.getStack(slot);
+        boneAndTool.set(slot, ItemStack.EMPTY);
         if (!result.isEmpty()) {
             markDirty();
         }
@@ -67,9 +85,12 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        boneAndTool.set(slot, stack);
-        if (stack.getCount() > stack.getMaxCount()) {
-            stack.setCount(stack.getMaxCount());
+        if (slot == 0 && isBoneable(stack) ||
+                slot == 1 && isBoneing(stack)) {
+            boneAndTool.set(slot, stack);
+            if (stack.getCount() > stack.getMaxCount()) {
+                stack.setCount(stack.getMaxCount());
+            }
         }
     }
 
