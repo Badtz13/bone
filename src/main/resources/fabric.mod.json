@@ -17,10 +17,10 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			{
-				"value": "me.woach.bone.Bone",
-				"adapter": "default"
-			}
+			"me.woach.bone.Bone"
+		],
+		"client": [
+			"me.woach.bone.BoneClient"
 		]
 	},
 	"mixins": [

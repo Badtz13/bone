@@ -1,6 +1,10 @@
 package me.woach.bone.blocks;
 
 import me.woach.bone.Bone;
+import me.woach.bone.networking.Packets;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -8,7 +12,10 @@ import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
@@ -20,6 +27,33 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
     public BoneForgeBlockEntity(BlockPos pos, BlockState state) {
         super(Bone.BONE_FORGE_BLOCK_ENTITY, pos, state);
+    }
+
+    public ItemStack getRenderStack() {
+        return boneAndTool.get(TOOL_SLOT);
+    }
+
+    public void setInventory(DefaultedList<ItemStack> list) {
+        for(int i = 0; i < boneAndTool.size(); i++) {
+            boneAndTool.set(i, list.get(i));
+        }
+    }
+
+    public void markDirty() {
+        assert world != null;
+        if(!world.isClient()) {
+            PacketByteBuf data = PacketByteBufs.create();
+            data.writeInt(boneAndTool.size());
+            for (ItemStack itemStack : boneAndTool) {
+                data.writeItemStack(itemStack);
+            }
+            data.writeBlockPos(getPos());
+
+            for(ServerPlayerEntity player : PlayerLookup.tracking((ServerWorld) world, getPos())) {
+                ServerPlayNetworking.send(player, Packets.ITEM_SYNC, data);
+            }
+        }
+        super.markDirty();
     }
 
     public boolean isBoneable(ItemStack stack) {
