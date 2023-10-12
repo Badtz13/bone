@@ -1,4 +1,19 @@
 {
-    "block.bone.snow_leaves": "Snowy Leaves",
-    "block.bone.bone_forge": "Bone Forge"
+    "block.bone.bone_forge": "Bone Forge",
+    "item.bone.amethyst_dust": "Amethyst Dust",
+    "item.bone.lapis_dust": "Lapis Dust",
+    "item.bone.diamond_dust": "Diamond Dust",
+    "item.bone.emerald_dust": "Emerald Dust",
+    "item.bone.jord": "Essence of Jörd",
+    "item.bone.aegir": "Essence of Ægir",
+    "item.bone.stjarna": "Essence of Stjarna",
+    "item.bone.bonesteel_pickaxe": "Bonesteel Pickaxe",
+    "item.bone.bonesteel_axe": "Bonesteel Axe",
+    "item.bone.bonesteel_sword": "Bonesteel Sword",
+    "item.bone.bonesteel_shovel": "Bonesteel Shovel",
+    "item.bone.bonesteel_hoe": "Bonesteel Hoe",
+    "item.bone.bonesteel_helmet": "Bonesteel Helmet",
+    "item.bone.bonesteel_chestplate": "Bonesteel Chestplate",
+    "item.bone.bonesteel_leggings": "Bonesteel Leggings",
+    "item.bone.bonesteel_boots": "Bonesteel Boots"
 }

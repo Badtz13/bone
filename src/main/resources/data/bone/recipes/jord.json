@@ -1,0 +1,28 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SLG",
+        "ABA",
+        "GLS"
+    ],
+    "key": {
+        "S": {
+            "tag": "c:seeds"
+        },
+        "L": {
+            "item": "bone:lapis_dust"
+        },
+        "G": {
+            "tag": "c:grass"
+        },
+        "A": {
+            "item": "bone:amethyst_dust"
+        },
+        "B": {
+            "item": "minecraft:bowl"
+        }
+    },
+    "result": {
+        "item": "bone:jord"
+    }
+}

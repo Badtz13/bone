@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "bone:amethyst_dust",
+        "bone:lapis_dust",
+        "bone:emerald_dust",
+        "bone:diamond_dust"
+    ]
+}
