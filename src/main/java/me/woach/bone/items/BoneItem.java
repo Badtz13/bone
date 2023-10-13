@@ -7,7 +7,7 @@ import net.minecraft.util.Rarity;
 
 public class BoneItem extends Item {
     public BoneItem() {
-        super(new Item.Settings().maxCount(16).rarity(Rarity.RARE));
+        super(new Item.Settings().maxCount(16).rarity(Rarity.UNCOMMON));
     }
 
     @Override

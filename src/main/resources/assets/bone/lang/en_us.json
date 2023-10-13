@@ -15,5 +15,7 @@
     "item.bone.bonesteel_helmet": "Bonesteel Helmet",
     "item.bone.bonesteel_chestplate": "Bonesteel Chestplate",
     "item.bone.bonesteel_leggings": "Bonesteel Leggings",
-    "item.bone.bonesteel_boots": "Bonesteel Boots"
+    "item.bone.bonesteel_boots": "Bonesteel Boots",
+    "item.bone.bone": "Bone",
+    "itemGroup.bone.bone": "Bone"
 }
