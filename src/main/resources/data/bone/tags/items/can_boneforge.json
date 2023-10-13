@@ -6,7 +6,7 @@
         "minecraft:iron_shovel",
         "minecraft:iron_hoe",
         "minecraft:iron_axe",
-        "minecraf:iron_helmet",
+        "minecraft:iron_helmet",
         "minecraft:iron_chestplate",
         "minecraft:iron_leggings",
         "minecraft:iron_boots",
@@ -18,7 +18,6 @@
         "bone:bonesteel_helmet",
         "bone:bonesteel_chestplate",
         "bone:bonesteel_leggings",
-        "bone:bonesteel_boots",
-        "farmersdelight:iron_knife"
+        "bone:bonesteel_boots"
     ]
 }

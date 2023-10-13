@@ -2,6 +2,7 @@ package me.woach.bone;
 
 import java.util.List;
 
+import me.woach.bone.blocks.BoneFireBlock;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import org.slf4j.Logger;
@@ -50,6 +51,7 @@ public class Bone implements ModInitializer {
     public static final Registry<BoneEffect> BONE_EFFECT_REGISTRY = FabricRegistryBuilder
                     .createSimple(BONE_EFFECT_REGISTRY_KEY).buildAndRegister();
     public static final BoneForgeBlock BONE_FORGE_BLOCK = new BoneForgeBlock();
+    public static final BoneFireBlock BONE_FIRE_BLOCK = new BoneFireBlock();
     public static final BlockEntityType<BoneForgeBlockEntity> BONE_FORGE_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
             getId("bone_forge_entity"),
@@ -70,6 +72,7 @@ public class Bone implements ModInitializer {
         Registry.register(Registries.ITEM_GROUP, getId("bone"), ITEM_GROUP.entries((context, entries) -> {
             entries.add(BONE_ITEM);
             entries.add(BONE_FORGE_BLOCK);
+            entries.add(BONE_FIRE_BLOCK);
             for (AbstractItemRegistry ItemRegistry : ITEM_REGISTRIES) {
                 for (Item item : ItemRegistry.getItems()) {
                     entries.add(item);
@@ -80,6 +83,9 @@ public class Bone implements ModInitializer {
         Registry.register(Registries.BLOCK, getId("bone_forge"), BONE_FORGE_BLOCK);
         Registry.register(Registries.ITEM, getId("bone_forge"),
                         new BlockItem(BONE_FORGE_BLOCK, new FabricItemSettings()));
+        Registry.register(Registries.BLOCK, getId("bone_fire"), BONE_FIRE_BLOCK);
+        Registry.register(Registries.ITEM, getId("bone_fire"),
+                new BlockItem(BONE_FIRE_BLOCK, new FabricItemSettings()));
         Registry.register(Registries.ITEM, getId("bone"), BONE_ITEM);
 
         EssenceItemRegistry.registerEssenceItems();
