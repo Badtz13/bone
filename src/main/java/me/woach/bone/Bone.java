@@ -52,6 +52,5 @@ public class Bone implements ModInitializer {
 
         BoneReloader reloader = new BoneReloader();
         reloader.registerReloadListener();
-
     }
 }

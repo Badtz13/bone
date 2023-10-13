@@ -37,6 +37,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
         for(int i = 0; i < boneAndTool.size(); i++) {
             boneAndTool.set(i, list.get(i));
         }
+        markDirty();
     }
 
     public void markDirty() {
@@ -114,6 +115,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public ItemStack removeStack(int slot) {
+        markDirty();
         return Inventories.removeStack(boneAndTool, slot);
     }
 
@@ -126,6 +128,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
                 stack.setCount(stack.getMaxCount());
             }
         }
+        markDirty();
     }
 
     @Override
