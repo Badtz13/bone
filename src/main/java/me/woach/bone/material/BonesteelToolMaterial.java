@@ -1,6 +1,5 @@
 package me.woach.bone.material;
 
-import me.woach.bone.Bone;
 import me.woach.bone.items.BoneItems;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;

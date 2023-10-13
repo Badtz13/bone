@@ -20,6 +20,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class BoneForgeBlock extends Block implements BlockEntityProvider {
     public BoneForgeBlock() {
         super(FabricBlockSettings.create().pistonBehavior(PistonBehavior.BLOCK).strength(4.0f).requiresTool()

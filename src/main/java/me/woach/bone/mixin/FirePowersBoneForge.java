@@ -1,6 +1,5 @@
 package me.woach.bone.mixin;
 
-import me.woach.bone.Bone;
 import me.woach.bone.block.entity.BoneEntities;
 import me.woach.bone.block.entity.BoneForgeBlockEntity;
 import net.minecraft.block.AbstractFireBlock;
