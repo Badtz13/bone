@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "bone:bonesteel_pickaxe",
+        "bone:bonesteel_sword",
+        "bone:bonesteel_shovel",
+        "bone:bonesteel_hoe",
+        "bone:bonesteel_axe"
+    ]
+}
