@@ -4,7 +4,8 @@
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
 		"LootPoolAccessor",
-		"EntitiesDropBones"
+		"EntitiesDropBones",
+		"FirePowersBoneForge"
 	],
 	"injectors": {
 		"defaultRequire": 1

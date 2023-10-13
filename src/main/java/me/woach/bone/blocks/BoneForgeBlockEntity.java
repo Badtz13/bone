@@ -1,6 +1,7 @@
 package me.woach.bone.blocks;
 
 import me.woach.bone.Bone;
+import me.woach.bone.items.EssenceItemRegistry;
 import me.woach.bone.networking.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -20,8 +21,9 @@ import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 
 public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
-    DefaultedList<ItemStack> boneAndTool = DefaultedList.ofSize(2, ItemStack.EMPTY);
+    private final DefaultedList<ItemStack> boneAndTool = DefaultedList.ofSize(2, ItemStack.EMPTY);
 
+    private short EssenceLevel = 0;
     public static final int BONE_SLOT = 1;
     public static final int TOOL_SLOT = 0;
 
@@ -38,6 +40,31 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
             boneAndTool.set(i, list.get(i));
         }
         markDirty();
+    }
+
+    private short levelFromEssence(ItemStack essence) {
+        if (essence.isOf(EssenceItemRegistry.JORD))
+            return 1;
+        if (essence.isOf(EssenceItemRegistry.AEGIR))
+            return 2;
+        if (essence.isOf(EssenceItemRegistry.STJARNA))
+            return 3;
+        return 0;
+    }
+
+    public void setEssenceLevel(ItemStack essence) {
+        assert isDust(essence);
+        EssenceLevel = levelFromEssence(essence);
+        markDirty();
+    }
+
+    public void resetEssenceLevel() {
+        EssenceLevel = 0;
+        markDirty();
+    }
+
+    public short getEssenceLevel() {
+        return EssenceLevel;
     }
 
     public void markDirty() {
@@ -65,6 +92,10 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
         return stack.isOf(Bone.BONE_ITEM);
     }
 
+    public boolean isDust(ItemStack stack) {
+        return stack.isOf(EssenceItemRegistry.AEGIR);
+    }
+
     @Override
     public int getMaxCountPerStack() {
         return 1;
@@ -72,6 +103,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
+        nbt.putShort("EssenceLevel", EssenceLevel);
         Inventories.writeNbt(nbt, boneAndTool);
         super.writeNbt(nbt);
     }
@@ -80,6 +112,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         Inventories.readNbt(nbt, boneAndTool);
+        EssenceLevel = nbt.getShort("EssenceLevel");
     }
 
     @Override

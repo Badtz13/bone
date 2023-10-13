@@ -11,8 +11,7 @@ import net.minecraft.util.Rarity;
 
 public class EssenceItemRegistry implements AbstractItemRegistry {
 
-    public static final FabricItemSettings ESSENCES = new FabricItemSettings().maxCount(16).rarity(Rarity.EPIC)
-            .fireproof();
+    public static final FabricItemSettings ESSENCES = new FabricItemSettings().maxCount(16).rarity(Rarity.EPIC);
 
     public static final Item JORD = new Item(ESSENCES);
     public static final Item AEGIR = new Item(ESSENCES);
