@@ -1,7 +1,8 @@
 package me.woach.bone.mixin;
 
 import me.woach.bone.Bone;
-import me.woach.bone.blocks.BoneForgeBlockEntity;
+import me.woach.bone.block.entity.BoneEntities;
+import me.woach.bone.block.entity.BoneForgeBlockEntity;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -28,7 +29,7 @@ public class FirePowersBoneForge {
     @Unique
     private boolean checkConsumptionParameters(World world, Entity entity, BlockPos pos) {
         BlockEntity be = world.getBlockEntity(pos.up());
-        if (be == null || !be.getType().equals(Bone.BONE_FORGE_BLOCK_ENTITY))
+        if (be == null || !be.getType().equals(BoneEntities.BONE_FORGE_BLOCK_ENTITY))
             return false;
         forge = (BoneForgeBlockEntity) be;
         if (!entity.getType().equals(EntityType.ITEM))
@@ -48,7 +49,7 @@ public class FirePowersBoneForge {
     @Inject(method = "onBreak", at = @At("HEAD"))
     private void resetBoneForgeLevel(World world, BlockPos pos, BlockState state, PlayerEntity player, CallbackInfo ci) {
         BlockEntity be = world.getBlockEntity(pos.up());
-        if (be != null && be.getType().equals(Bone.BONE_FORGE_BLOCK_ENTITY)) {
+        if (be != null && be.getType().equals(BoneEntities.BONE_FORGE_BLOCK_ENTITY)) {
             forge = (BoneForgeBlockEntity) be;
             forge.resetEssenceLevel();
         }

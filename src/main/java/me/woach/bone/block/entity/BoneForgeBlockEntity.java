@@ -1,7 +1,7 @@
-package me.woach.bone.blocks;
+package me.woach.bone.block.entity;
 
-import me.woach.bone.Bone;
-import me.woach.bone.items.EssenceItemRegistry;
+import me.woach.bone.items.BoneItemTags;
+import me.woach.bone.items.BoneItems;
 import me.woach.bone.networking.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -27,7 +27,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     public static final int TOOL_SLOT = 0;
 
     public BoneForgeBlockEntity(BlockPos pos, BlockState state) {
-        super(Bone.BONE_FORGE_BLOCK_ENTITY, pos, state);
+        super(BoneEntities.BONE_FORGE_BLOCK_ENTITY, pos, state);
     }
 
     public ItemStack getRenderStack() {
@@ -42,11 +42,11 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     }
 
     private short levelFromEssence(ItemStack essence) {
-        if (essence.isOf(EssenceItemRegistry.JORD))
+        if (essence.isOf(BoneItems.JORD))
             return 1;
-        if (essence.isOf(EssenceItemRegistry.AEGIR))
+        if (essence.isOf(BoneItems.AEGIR))
             return 2;
-        if (essence.isOf(EssenceItemRegistry.STJARNA))
+        if (essence.isOf(BoneItems.STJARNA))
             return 3;
         return 0;
     }
@@ -84,15 +84,15 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     }
 
     public boolean isBoneforgable(ItemStack stack) {
-        return stack.isIn(Bone.CAN_BONEFORGE);
+        return stack.isIn(BoneItemTags.CAN_BONEFORGE);
     }
 
     public boolean isBone(ItemStack stack) {
-        return stack.isIn(Bone.CAN_BONE);
+        return stack.isIn(BoneItemTags.CAN_BONE);
     }
 
     public boolean canFuelBoneforge(ItemStack stack) {
-        return stack.isIn(Bone.CAN_FUEL_BONEFORGE);
+        return stack.isIn(BoneItemTags.CAN_FUEL_BONEFORGE);
     }
 
     @Override

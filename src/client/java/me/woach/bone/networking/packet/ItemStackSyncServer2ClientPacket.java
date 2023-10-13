@@ -1,6 +1,6 @@
 package me.woach.bone.networking.packet;
 
-import me.woach.bone.blocks.BoneForgeBlockEntity;
+import me.woach.bone.block.entity.BoneForgeBlockEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;

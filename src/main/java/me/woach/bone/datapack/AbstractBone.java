@@ -3,6 +3,7 @@ package me.woach.bone.datapack;
 import com.google.gson.*;
 import me.woach.bone.Bone;
 import me.woach.bone.effects.BoneEffect;
+import me.woach.bone.items.BoneItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
@@ -33,7 +34,7 @@ public class AbstractBone {
         if (!rollChance(lootingLvl))
             return;
 
-        ItemStack boneToDrop = new ItemStack(Bone.BONE_ITEM);
+        ItemStack boneToDrop = new ItemStack(BoneItems.BONE_ITEM);
 
         NbtCompound nbtData = new NbtCompound();
         nbtData.putString("MobSource", dropEntity.toString());

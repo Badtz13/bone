@@ -1,6 +1,6 @@
-package me.woach.bone.blocks;
+package me.woach.bone.blocks.entity;
 
-import me.woach.bone.Bone;
+import me.woach.bone.block.entity.BoneForgeBlockEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
