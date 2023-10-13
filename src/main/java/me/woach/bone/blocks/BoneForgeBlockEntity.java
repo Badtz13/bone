@@ -14,7 +14,6 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.DefaultedList;
@@ -53,7 +52,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     }
 
     public void setEssenceLevel(ItemStack essence) {
-        assert isDust(essence);
+        assert canFuelBoneforge(essence);
         EssenceLevel = levelFromEssence(essence);
         markDirty();
     }
@@ -84,16 +83,16 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
         super.markDirty();
     }
 
-    public boolean isBoneable(ItemStack stack) {
-        return stack.isIn(ItemTags.TOOLS);
+    public boolean isBoneforgable(ItemStack stack) {
+        return stack.isIn(Bone.CAN_BONEFORGE);
     }
 
-    public boolean isBoneing(ItemStack stack) {
-        return stack.isOf(Bone.BONE_ITEM);
+    public boolean isBone(ItemStack stack) {
+        return stack.isIn(Bone.CAN_BONE);
     }
 
-    public boolean isDust(ItemStack stack) {
-        return stack.isOf(EssenceItemRegistry.AEGIR);
+    public boolean canFuelBoneforge(ItemStack stack) {
+        return stack.isIn(Bone.CAN_FUEL_BONEFORGE);
     }
 
     @Override
@@ -154,8 +153,8 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     public void setStack(int slot, ItemStack stack) {
-        if (slot == 0 && isBoneable(stack) ||
-                slot == 1 && isBoneing(stack)) {
+        if (slot == 0 && isBoneforgable(stack) ||
+                slot == 1 && isBone(stack)) {
             boneAndTool.set(slot, stack);
             if (stack.getCount() > stack.getMaxCount()) {
                 stack.setCount(stack.getMaxCount());

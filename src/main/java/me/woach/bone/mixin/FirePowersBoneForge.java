@@ -35,7 +35,7 @@ public class FirePowersBoneForge {
             return false;
         ItemEntity item = (ItemEntity) entity;
         essence = item.getStack();
-        return forge.isDust(essence);
+        return forge.canFuelBoneforge(essence);
     }
     @Inject(method = "onEntityCollision", at = @At("HEAD"))
     private void consumePowerUnderForge(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {

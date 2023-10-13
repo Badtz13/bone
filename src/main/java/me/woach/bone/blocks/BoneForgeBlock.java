@@ -43,14 +43,14 @@ public class BoneForgeBlock extends Block implements BlockEntityProvider {
         ItemStack playersItem = player.getStackInHand(hand);
         if (!playersItem.isEmpty()) {
             // Try to put tool into forge
-            if(blockEntity.isBoneable(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.TOOL_SLOT).isEmpty()) {
+            if(blockEntity.isBoneforgable(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.TOOL_SLOT).isEmpty()) {
                 blockEntity.setStack(BoneForgeBlockEntity.TOOL_SLOT, playersItem.copy());
                 playersItem.setCount(0);
                 return ActionResult.SUCCESS;
             }
 
             // Try to put bone into forge
-            if(blockEntity.isBoneing(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.BONE_SLOT).isEmpty()) {
+            if(blockEntity.isBone(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.BONE_SLOT).isEmpty()) {
                 blockEntity.setStack(BoneForgeBlockEntity.BONE_SLOT, playersItem.copyWithCount(1));
                 if (!player.getAbilities().creativeMode) {
                     playersItem.decrement(1);

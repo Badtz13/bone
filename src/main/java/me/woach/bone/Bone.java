@@ -2,6 +2,8 @@ package me.woach.bone;
 
 import java.util.List;
 
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.tag.TagKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,6 +59,10 @@ public class Bone implements ModInitializer {
     private static final ItemGroup.Builder ITEM_GROUP = FabricItemGroup.builder()
                     .icon(() -> new ItemStack(BONE_ITEM))
                     .displayName(Text.translatable("itemGroup.bone.bone"));
+
+    public static final TagKey<Item> CAN_BONE = TagKey.of(RegistryKeys.ITEM, getId("can_bone"));
+    public static final TagKey<Item> CAN_BONEFORGE = TagKey.of(RegistryKeys.ITEM, getId("can_bone"));
+    public static final TagKey<Item> CAN_FUEL_BONEFORGE = TagKey.of(RegistryKeys.ITEM, getId("can_bone"));
 
     @Override
     public void onInitialize() {
