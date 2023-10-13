@@ -9,7 +9,8 @@ import net.minecraft.sound.BlockSoundGroup;
 
 public class BoneFireBlock extends AbstractFireBlock {
     public BoneFireBlock() {
-        super(AbstractBlock.Settings.create().mapColor(MapColor.YELLOW).replaceable().noCollision().breakInstantly().luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY), 2.0f);
+        super(AbstractBlock.Settings.create().mapColor(MapColor.YELLOW).replaceable().noCollision().breakInstantly()
+                .luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY), 2.0f);
     }
 
     @Override
