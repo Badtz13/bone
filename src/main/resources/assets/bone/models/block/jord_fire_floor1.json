@@ -1,5 +1,5 @@
 {
-    "parent": "bone:block/template_fire_floor",
+    "parent": "minecraft:block/template_fire_floor",
     "textures": {
         "fire": "bone:block/jord_fire_1"
     }

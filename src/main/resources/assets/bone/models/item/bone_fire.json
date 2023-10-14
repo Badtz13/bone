@@ -1,0 +1,85 @@
+{
+    "parent": "bone:block/bone_fire",
+    "display": {
+        "ground": {
+            "translation": [
+                0,
+                2,
+                0
+            ],
+            "scale": [
+                0.3,
+                0.3,
+                0.3
+            ]
+        },
+        "gui": {
+            "rotation": [
+                30,
+                225,
+                0
+            ],
+            "translation": [
+                0,
+                0,
+                0
+            ],
+            "scale": [
+                0.625,
+                0.625,
+                0.625
+            ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [
+                10,
+                -45,
+                0
+            ],
+            "translation": [
+                0,
+                1.5,
+                -2.75
+            ],
+            "scale": [
+                0.375,
+                0.375,
+                0.375
+            ]
+        },
+        "firstperson_righthand": {
+            "rotation": [
+                0,
+                -135,
+                25
+            ],
+            "translation": [
+                0,
+                4,
+                2
+            ],
+            "scale": [
+                0.4,
+                0.4,
+                0.4
+            ]
+        },
+        "fixed": {
+            "rotation": [
+                0,
+                0,
+                0
+            ],
+            "translation": [
+                0,
+                0,
+                0
+            ],
+            "scale": [
+                0.5,
+                0.5,
+                0.5
+            ]
+        }
+    }
+}
