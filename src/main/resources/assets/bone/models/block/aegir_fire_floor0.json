@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/template_fire_floor",
+    "textures": {
+        "fire": "bone:block/aegir_fire_0"
+    }
+}

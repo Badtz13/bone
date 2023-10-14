@@ -1,5 +1,9 @@
 {
     "block.bone.bone_forge": "Bone Forge",
+    "block.bone.bone_fire": "Bone Fire",
+    "block.bone.bone_fire.type=jord": "Jord Fire",
+    "block.bone.bone_fire.type=aegir": "Aegir Fire",
+    "block.bone.bone_fire.type=stjarna": "Stjarna Fire",
     "item.bone.amethyst_dust": "Amethyst Dust",
     "item.bone.lapis_dust": "Lapis Dust",
     "item.bone.diamond_dust": "Diamond Dust",
