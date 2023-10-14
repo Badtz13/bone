@@ -1,20 +1,81 @@
 package me.woach.bone.blocks;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
+import me.woach.bone.Bone;
+import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldEvents;
 
-public class BoneFireBlock extends AbstractFireBlock {
+public class BoneFireBlock extends Block {
+    protected static final VoxelShape BASE_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
+    private final float damage;
+
     public BoneFireBlock() {
         super(AbstractBlock.Settings.create().mapColor(MapColor.YELLOW).replaceable().noCollision().breakInstantly()
-                .luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY), 2.0f);
+                .luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY));
+        this.damage = 2;
     }
 
     @Override
-    protected boolean isFlammable(BlockState state) {
-        return true;
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return BASE_SHAPE;
+    }
+
+    private boolean checkConsumptionParameters(World world, Entity entity, BlockPos pos) {
+        BlockEntity be = world.getBlockEntity(pos.up());
+        if (be == null || !be.getType().equals(Bone.BONE_FORGE_BLOCK_ENTITY))
+            return false;
+        BoneForgeBlockEntity forge = (BoneForgeBlockEntity) be;
+        if (!entity.getType().equals(EntityType.ITEM))
+            return false;
+        ItemEntity item = (ItemEntity) entity;
+        ItemStack essence = item.getStack();
+        return forge.canFuelBoneforge(essence);
+    }
+
+    public void convertToFire(World world, BlockPos pos) {
+        // TODO: IF SOULSAND IS UNDERNEATH THE BLOCK, MAKE IT SOUL FIRE INSTEAD
+        world.setBlockState(pos, Blocks.FIRE.getDefaultState());
+    }
+
+    @Override
+    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        if(checkConsumptionParameters(world, entity, pos)) {
+            BoneForgeBlockEntity forge = (BoneForgeBlockEntity) world.getBlockEntity(pos.up());
+            ItemStack essence = ((ItemEntity) entity).getStack();
+            forge.setEssenceLevel(essence);
+            entity.discard();
+        }
+        if (!entity.isFireImmune()) {
+            entity.setFireTicks(entity.getFireTicks() + 1);
+            if (entity.getFireTicks() == 0) {
+                entity.setOnFireFor(8);
+            }
+        }
+        entity.damage(world.getDamageSources().inFire(), this.damage);
+        super.onEntityCollision(state, world, pos, entity);
+    }
+
+    @Override
+    public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+        BlockEntity be = world.getBlockEntity(pos.up());
+        if (be != null && be.getType().equals(Bone.BONE_FORGE_BLOCK_ENTITY)) {
+            BoneForgeBlockEntity forge = (BoneForgeBlockEntity) be;
+            forge.resetEssenceLevel();
+        }
+        if (!world.isClient()) {
+            world.syncWorldEvent(null, WorldEvents.FIRE_EXTINGUISHED, pos, 0);
+        }
+        super.onBreak(world, pos, state, player);
     }
 }

@@ -41,6 +41,7 @@ public class FirePowersBoneForge {
     private void consumePowerUnderForge(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
         if(checkConsumptionParameters(world, entity, pos)) {
             forge.setEssenceLevel(essence);
+            world.setBlockState(pos, Bone.BONE_FIRE_BLOCK.getDefaultState());
             entity.discard();
         }
     }

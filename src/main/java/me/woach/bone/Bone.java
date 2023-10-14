@@ -63,8 +63,8 @@ public class Bone implements ModInitializer {
             .displayName(Text.translatable("itemGroup.bone.bone"));
 
     public static final TagKey<Item> CAN_BONE = TagKey.of(RegistryKeys.ITEM, getId("can_bone"));
-    public static final TagKey<Item> CAN_BONEFORGE = TagKey.of(RegistryKeys.ITEM, getId("can_bone"));
-    public static final TagKey<Item> CAN_FUEL_BONEFORGE = TagKey.of(RegistryKeys.ITEM, getId("can_bone"));
+    public static final TagKey<Item> CAN_BONEFORGE = TagKey.of(RegistryKeys.ITEM, getId("can_boneforge"));
+    public static final TagKey<Item> CAN_FUEL_BONEFORGE = TagKey.of(RegistryKeys.ITEM, getId("can_fuel_boneforge"));
 
     @Override
     public void onInitialize() {
@@ -72,7 +72,6 @@ public class Bone implements ModInitializer {
         Registry.register(Registries.ITEM_GROUP, getId("bone"), ITEM_GROUP.entries((context, entries) -> {
             entries.add(BONE_ITEM);
             entries.add(BONE_FORGE_BLOCK);
-            entries.add(BONE_FIRE_BLOCK);
             for (AbstractItemRegistry ItemRegistry : ITEM_REGISTRIES) {
                 for (Item item : ItemRegistry.getItems()) {
                     entries.add(item);
