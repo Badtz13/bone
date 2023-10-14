@@ -1,7 +1,7 @@
 package me.woach.bone.items;
 
 import me.woach.bone.Bone;
-import me.woach.bone.block.BoneBlocks;
+import me.woach.bone.block.BlocksRegistry;
 import me.woach.bone.material.BonesteelArmorMaterial;
 import me.woach.bone.material.BonesteelToolMaterial;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
@@ -18,7 +18,8 @@ import java.util.function.Supplier;
 
 public enum ItemsRegistry {
     BONE_ITEM("bone", BoneItem::new),
-    BONE_FORGE_BLOCK_ITEM("bone_forge", () -> new BlockItem(BoneBlocks.BONE_FORGE_BLOCK, new FabricItemSettings())),
+    BONE_FORGE_BLOCK_ITEM("bone_forge", () -> new BlockItem(BlocksRegistry.BONE_FORGE_BLOCK.get(),
+            new FabricItemSettings())),
     BONESTEEL_HELMET("bonesteel_helmet", () -> ItemBuilder.newItemArmor(Type.HELMET)),
     BONESTEEL_CHESTPLATE("bonesteel_chestplate", () -> ItemBuilder.newItemArmor(Type.CHESTPLATE)),
     BONESTEEL_LEGGINGS("bonesteel_leggings", () -> ItemBuilder.newItemArmor(Type.LEGGINGS)),

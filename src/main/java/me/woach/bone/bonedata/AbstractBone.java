@@ -1,4 +1,4 @@
-package me.woach.bone.datapack;
+package me.woach.bone.bonedata;
 
 import com.google.gson.*;
 import me.woach.bone.Bone;

@@ -1,6 +1,6 @@
 package me.woach.bone.block.entity;
 
-import me.woach.bone.items.BoneItemTags;
+import me.woach.bone.items.TagsRegistry;
 import me.woach.bone.items.ItemsRegistry;
 import me.woach.bone.networking.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -27,7 +27,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     public static final int TOOL_SLOT = 0;
 
     public BoneForgeBlockEntity(BlockPos pos, BlockState state) {
-        super(BoneEntities.BONE_FORGE_BLOCK_ENTITY, pos, state);
+        super(BlockEntityTypesRegistry.BONE_FORGE_BLOCK_ENTITY.get(), pos, state);
     }
 
     public ItemStack getRenderStack() {
@@ -84,15 +84,15 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     }
 
     public boolean isBoneforgable(ItemStack stack) {
-        return stack.isIn(BoneItemTags.CAN_BONEFORGE);
+        return stack.isIn(TagsRegistry.CAN_BONEFORGE);
     }
 
     public boolean isBone(ItemStack stack) {
-        return stack.isIn(BoneItemTags.CAN_BONE);
+        return stack.isIn(TagsRegistry.CAN_BONE);
     }
 
     public boolean canFuelBoneforge(ItemStack stack) {
-        return stack.isIn(BoneItemTags.CAN_FUEL_BONEFORGE);
+        return stack.isIn(TagsRegistry.CAN_FUEL_BONEFORGE);
     }
 
     @Override

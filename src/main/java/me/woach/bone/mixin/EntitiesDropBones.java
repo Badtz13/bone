@@ -1,14 +1,12 @@
 package me.woach.bone.mixin;
 
-import me.woach.bone.Bone;
-import me.woach.bone.datapack.AbstractBone;
-import me.woach.bone.registries.BoneRegistry;
+import me.woach.bone.bonedata.AbstractBone;
+import me.woach.bone.bonedata.BoneRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -20,8 +18,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Set;
 
 @Mixin(LivingEntity.class)
 public abstract class EntitiesDropBones extends Entity {
