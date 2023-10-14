@@ -38,9 +38,10 @@ public abstract class EntitiesDropBones extends Entity {
         short lootingLvl = 0;
 
         // Check for enchantment levels
-        NbtElement elem = this.attackingPlayer.getMainHandStack().getNbt().get("Enchantments");
-        if (elem != null) {
-            NbtList enchants = (NbtList) elem;
+        NbtCompound nbt = this.attackingPlayer.getMainHandStack().getNbt();
+        if (nbt != null && nbt.get("Enchantments") != null) {
+            NbtList enchants = (NbtList) nbt.get("Enchantments");
+            assert enchants != null;
             for (NbtElement enchant : enchants) {
                 NbtCompound curr = (NbtCompound) enchant;
                 String id = curr.getString("id");

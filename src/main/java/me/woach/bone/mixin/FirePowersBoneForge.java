@@ -28,7 +28,7 @@ public class FirePowersBoneForge {
     @Unique
     private boolean checkConsumptionParameters(World world, Entity entity, BlockPos pos) {
         BlockEntity be = world.getBlockEntity(pos.up());
-        if (be == null || !be.getType().equals(BlockEntityTypesRegistry.BONE_FORGE_BLOCK_ENTITY))
+        if (be == null || !be.getType().equals(BlockEntityTypesRegistry.BONE_FORGE_BLOCK_ENTITY.get()))
             return false;
         forge = (BoneForgeBlockEntity) be;
         if (!entity.getType().equals(EntityType.ITEM))
@@ -48,7 +48,7 @@ public class FirePowersBoneForge {
     @Inject(method = "onBreak", at = @At("HEAD"))
     private void resetBoneForgeLevel(World world, BlockPos pos, BlockState state, PlayerEntity player, CallbackInfo ci) {
         BlockEntity be = world.getBlockEntity(pos.up());
-        if (be != null && be.getType().equals(BlockEntityTypesRegistry.BONE_FORGE_BLOCK_ENTITY)) {
+        if (be != null && be.getType().equals(BlockEntityTypesRegistry.BONE_FORGE_BLOCK_ENTITY.get())) {
             forge = (BoneForgeBlockEntity) be;
             forge.resetEssenceLevel();
         }
