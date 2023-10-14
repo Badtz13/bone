@@ -49,8 +49,10 @@ public class BoneFireBlock extends Block {
     private final float damage;
 
     public BoneFireBlock() {
-        super(AbstractBlock.Settings.create().mapColor(MapColor.YELLOW).replaceable().noCollision().breakInstantly()
-                .luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY));
+        super(AbstractBlock.Settings.create().mapColor(MapColor.LICHEN_GREEN).replaceable().noCollision()
+                .breakInstantly()
+                .luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY)
+                .breakInstantly());
         this.damage = 2;
         setDefaultState(getStateManager().getDefaultState().with(TYPE, FireType.JORD));
     }
@@ -63,6 +65,10 @@ public class BoneFireBlock extends Block {
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return BASE_SHAPE;
+    }
+
+    @Override
+    protected void spawnBreakParticles(World world, PlayerEntity player, BlockPos pos, BlockState state) {
     }
 
     private boolean checkConsumptionParameters(World world, Entity entity, BlockPos pos) {
