@@ -1,88 +1,98 @@
 {
     "multipart": [
         {
+            "when": {
+                "type": "jord"
+            },
             "apply": [
                 {
-                    "model": "bone:block/bone_fire_floor0"
+                    "model": "bone:block/jord_fire_floor0"
                 },
                 {
-                    "model": "bone:block/bone_fire_floor1"
+                    "model": "bone:block/jord_fire_floor1"
                 }
             ]
         },
         {
+            "when": {
+                "type": "aegir"
+            },
             "apply": [
                 {
-                    "model": "bone:block/bone_fire_side0"
+                    "model": "bone:block/aegir_fire_floor0"
                 },
                 {
-                    "model": "bone:block/bone_fire_side1"
-                },
-                {
-                    "model": "bone:block/bone_fire_side_alt0"
-                },
-                {
-                    "model": "bone:block/bone_fire_side_alt1"
+                    "model": "bone:block/aegir_fire_floor1"
                 }
             ]
         },
         {
+            "when": {
+                "type": "stjarna"
+            },
             "apply": [
                 {
-                    "model": "bone:block/bone_fire_side0",
-                    "y": 90
+                    "model": "bone:block/stjarna_fire_floor0"
                 },
                 {
-                    "model": "bone:block/bone_fire_side1",
-                    "y": 90
-                },
-                {
-                    "model": "bone:block/bone_fire_side_alt0",
-                    "y": 90
-                },
-                {
-                    "model": "bone:block/bone_fire_side_alt1",
-                    "y": 90
+                    "model": "bone:block/stjarna_fire_floor1"
                 }
             ]
         },
         {
+            "when": {
+                "type": "jord"
+            },
             "apply": [
                 {
-                    "model": "bone:block/bone_fire_side0",
-                    "y": 180
+                    "model": "bone:block/jord_fire_side0"
                 },
                 {
-                    "model": "bone:block/bone_fire_side1",
-                    "y": 180
+                    "model": "bone:block/jord_fire_side1"
                 },
                 {
-                    "model": "bone:block/bone_fire_side_alt0",
-                    "y": 180
+                    "model": "bone:block/jord_fire_side_alt0"
                 },
                 {
-                    "model": "bone:block/bone_fire_side_alt1",
-                    "y": 180
+                    "model": "bone:block/jord_fire_side_alt1"
                 }
             ]
         },
         {
+            "when": {
+                "type": "aegir"
+            },
             "apply": [
                 {
-                    "model": "bone:block/bone_fire_side0",
-                    "y": 270
+                    "model": "bone:block/aegir_fire_side0"
                 },
                 {
-                    "model": "bone:block/bone_fire_side1",
-                    "y": 270
+                    "model": "bone:block/aegir_fire_side1"
                 },
                 {
-                    "model": "bone:block/bone_fire_side_alt0",
-                    "y": 270
+                    "model": "bone:block/aegir_fire_side_alt0"
                 },
                 {
-                    "model": "bone:block/bone_fire_side_alt1",
-                    "y": 270
+                    "model": "bone:block/aegir_fire_side_alt1"
+                }
+            ]
+        },
+        {
+            "when": {
+                "type": "stjarna"
+            },
+            "apply": [
+                {
+                    "model": "bone:block/stjarna_fire_side0"
+                },
+                {
+                    "model": "bone:block/stjarna_fire_side1"
+                },
+                {
+                    "model": "bone:block/stjarna_fire_side_alt0"
+                },
+                {
+                    "model": "bone:block/stjarna_fire_side_alt1"
                 }
             ]
         }
