@@ -1,6 +1,6 @@
 package me.woach.bone.material;
 
-import me.woach.bone.items.BoneItems;
+import me.woach.bone.items.ItemsRegistry;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 
@@ -35,6 +35,6 @@ public class BonesteelToolMaterial implements ToolMaterial {
 
     @Override
     public Ingredient getRepairIngredient() {
-        return Ingredient.ofItems(BoneItems.BONE_ITEM);
+        return Ingredient.ofItems(ItemsRegistry.BONE_ITEM.get());
     }
 }

@@ -1,6 +1,6 @@
 package me.woach.bone.material;
 
-import me.woach.bone.items.BoneItems;
+import me.woach.bone.items.ItemsRegistry;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.recipe.Ingredient;
@@ -33,7 +33,7 @@ public class BonesteelArmorMaterial implements ArmorMaterial {
 
     @Override
     public Ingredient getRepairIngredient() {
-        return Ingredient.ofItems(BoneItems.BONE_ITEM);
+        return Ingredient.ofItems(ItemsRegistry.BONE_ITEM.get());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package me.woach.bone.block.entity;
 
 import me.woach.bone.items.BoneItemTags;
-import me.woach.bone.items.BoneItems;
+import me.woach.bone.items.ItemsRegistry;
 import me.woach.bone.networking.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -42,11 +42,11 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     }
 
     private short levelFromEssence(ItemStack essence) {
-        if (essence.isOf(BoneItems.JORD))
+        if (essence.isOf(ItemsRegistry.JORD.get()))
             return 1;
-        if (essence.isOf(BoneItems.AEGIR))
+        if (essence.isOf(ItemsRegistry.AEGIR.get()))
             return 2;
-        if (essence.isOf(BoneItems.STJARNA))
+        if (essence.isOf(ItemsRegistry.STJARNA.get()))
             return 3;
         return 0;
     }
