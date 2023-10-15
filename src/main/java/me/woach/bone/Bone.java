@@ -21,7 +21,9 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
+import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -32,6 +34,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -52,6 +55,8 @@ public class Bone implements ModInitializer {
     public static final BoneForgeBlock BONE_FORGE_BLOCK = new BoneForgeBlock();
 
     public static final BoneFireBlock BONE_FIRE_BLOCK = new BoneFireBlock();
+    public static final Block CHARCOAL_BLOCK = new Block(FabricBlockSettings.create().requiresTool()
+            .strength(3.0f).sounds(BlockSoundGroup.STONE).burnable());
 
     public static final BlockEntityType<BoneForgeBlockEntity> BONE_FORGE_BLOCK_ENTITY = Registry.register(
             Registries.BLOCK_ENTITY_TYPE,
@@ -72,6 +77,7 @@ public class Bone implements ModInitializer {
         Registry.register(Registries.ITEM_GROUP, getId("bone"), ITEM_GROUP.entries((context, entries) -> {
             entries.add(BONE_ITEM);
             entries.add(BONE_FORGE_BLOCK);
+            entries.add(CHARCOAL_BLOCK);
             for (AbstractItemRegistry ItemRegistry : ITEM_REGISTRIES) {
                 for (Item item : ItemRegistry.getItems()) {
                     entries.add(item);
@@ -83,6 +89,9 @@ public class Bone implements ModInitializer {
         Registry.register(Registries.ITEM, getId("bone_forge"),
                 new BlockItem(BONE_FORGE_BLOCK, new FabricItemSettings()));
         Registry.register(Registries.BLOCK, getId("bone_fire"), BONE_FIRE_BLOCK);
+        Registry.register(Registries.BLOCK, getId("charcoal_block"), CHARCOAL_BLOCK);
+        Registry.register(Registries.ITEM, getId("charcoal_block"),
+                new BlockItem(CHARCOAL_BLOCK, new FabricItemSettings()));
         Registry.register(Registries.ITEM, getId("bone_fire"),
                 new BlockItem(BONE_FIRE_BLOCK, new FabricItemSettings()));
         Registry.register(Registries.ITEM, getId("bone"), BONE_ITEM);

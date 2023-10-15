@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
-        "bone:bone_forge"
+        "bone:bone_forge",
+        "bone:charcoal_block"
     ]
 }
