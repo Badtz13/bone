@@ -1,0 +1,34 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "FDP",
+        "LBE",
+        "PAF"
+    ],
+    "key": {
+        "F": {
+            "item": "minecraft:feather"
+        },
+        "D": {
+            "item": "bone:diamond_dust"
+        },
+        "P": {
+            "item": "minecraft:phantom_membrane"
+        },
+        "L": {
+            "item": "bone:lapis_dust"
+        },
+        "B": {
+            "item": "minecraft:bowl"
+        },
+        "E": {
+            "item": "bone:emerald_dust"
+        },
+        "A": {
+            "item": "bone:amethyst_dust"
+        }
+    },
+    "result": {
+        "item": "bone:stjarna"
+    }
+}
