@@ -20,6 +20,8 @@ public enum ItemsRegistry {
     BONE_ITEM("bone", BoneItem::new),
     BONE_FORGE_BLOCK_ITEM("bone_forge", () -> new BlockItem(BlocksRegistry.BONE_FORGE_BLOCK.get(),
             new FabricItemSettings())),
+    CHARCOAL_BLOCK_ITEM("charcoal_block", () -> new BlockItem(BlocksRegistry.CHARCOAL_BLOCK.get(),
+            new FabricItemSettings())),
     BONESTEEL_HELMET("bonesteel_helmet", () -> ItemBuilder.newItemArmor(Type.HELMET)),
     BONESTEEL_CHESTPLATE("bonesteel_chestplate", () -> ItemBuilder.newItemArmor(Type.CHESTPLATE)),
     BONESTEEL_LEGGINGS("bonesteel_leggings", () -> ItemBuilder.newItemArmor(Type.LEGGINGS)),

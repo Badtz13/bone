@@ -1,15 +1,19 @@
 package me.woach.bone.block;
 
 import me.woach.bone.Bone;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.BlockSoundGroup;
 
 import java.util.function.Supplier;
 
 public enum BlocksRegistry {
     BONE_FORGE_BLOCK("bone_forge", BoneForgeBlock::new),
-    BONE_FIRE_BLOCK("bone_fire", BoneFireBlock::new);
+    BONE_FIRE_BLOCK("bone_fire", BoneFireBlock::new),
+    CHARCOAL_BLOCK("charcoal_block", () -> new Block(
+            FabricBlockSettings.create().requiresTool().strength(3.0f).sounds(BlockSoundGroup.STONE).burnable()));
 
     private final String path;
     private final Supplier<Block> blockSupplier;

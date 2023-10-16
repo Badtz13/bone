@@ -30,10 +30,14 @@ public class BoneFireBlock extends Block {
     private final float damage;
 
     public BoneFireBlock() {
-        super(AbstractBlock.Settings.create().mapColor(MapColor.YELLOW).replaceable().noCollision().breakInstantly()
+        super(AbstractBlock.Settings.create().mapColor(MapColor.LICHEN_GREEN).replaceable().noCollision().breakInstantly()
                 .luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY).nonOpaque());
         this.damage = 2;
         setDefaultState(getStateManager().getDefaultState().with(TYPE, EssenceItem.Types.EMPTY));
+    }
+
+    @Override
+    protected void spawnBreakParticles(World world, PlayerEntity player, BlockPos pos, BlockState state) {
     }
 
     public BlockState getEssenceState(ItemStack essence) {
