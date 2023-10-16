@@ -1,16 +1,19 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "###",
-        "###",
-        "###"
+        "LLL",
+        "CCC",
+        "LLL"
     ],
     "key": {
-        "#": {
+        "L": {
+            "tag": "c:logs"
+        },
+        "C": {
             "item": "minecraft:charcoal"
         }
     },
     "result": {
-        "item": "bone:charcoal_block"
+        "item": "bone:firewood_block"
     }
 }
