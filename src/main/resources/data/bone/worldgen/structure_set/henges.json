@@ -1,0 +1,26 @@
+{
+  "structures": [
+    {
+      "structure": "bone:henge01",
+      "weight": 2
+    },
+    {
+      "structure": "bone:henge02",
+      "weight": 2
+    },
+    {
+      "structure": "bone:henge03",
+      "weight": 2
+    },
+    {
+      "structure": "bone:ruins01",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 30084232,
+    "spacing": 20,
+    "separation": 10
+  }
+}
