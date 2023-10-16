@@ -1,0 +1,22 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "SSS",
+        "AAA",
+        "B B"
+    ],
+    "key": {
+        "S": {
+            "item": "minecraft:smooth_stone_slab"
+        },
+        "A": {
+            "item": "minecraft:amethyst_shard"
+        },
+        "B": {
+            "item": "minecraft:iron_bars"
+        }
+    },
+    "result": {
+        "item": "bone:bone_forge"
+    }
+}
