@@ -1,9 +1,8 @@
-package me.woach.bone.datapack;
+package me.woach.bone.bonedata;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.woach.bone.Bone;
-import me.woach.bone.registries.BoneRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.Resource;
@@ -19,7 +18,7 @@ import java.util.Map;
 public class BoneReloader {
     private static final String RESOURCE_FOLDER = "bones";
 
-    public void registerReloadListener() {
+    public static void registerReloadListener() {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(
                 new SimpleSynchronousResourceReloadListener() {
                     @Override

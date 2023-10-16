@@ -1,6 +1,5 @@
-package me.woach.bone.registries;
+package me.woach.bone.bonedata;
 
-import me.woach.bone.datapack.AbstractBone;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;

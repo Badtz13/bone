@@ -1,6 +1,6 @@
 package me.woach.bone.networking.packet;
 
-import me.woach.bone.blocks.BoneForgeBlockEntity;
+import me.woach.bone.block.entity.BoneForgeBlockEntity;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -12,8 +12,8 @@ import net.minecraft.util.math.BlockPos;
 public class ItemStackSyncServer2ClientPacket {
 
     public static void receive(MinecraftClient client,
-            ClientPlayNetworkHandler handler, PacketByteBuf buf,
-            PacketSender responSender) {
+                               ClientPlayNetworkHandler ignoredHandler, PacketByteBuf buf,
+                               PacketSender ignoredResponSender) {
 
         int size = buf.readInt();
         DefaultedList<ItemStack> list =
@@ -23,6 +23,7 @@ public class ItemStackSyncServer2ClientPacket {
         }
         BlockPos position = buf.readBlockPos();
 
+        assert client.world != null;
         if(client.world.getBlockEntity(position) instanceof
                 BoneForgeBlockEntity blockEntity) {
             blockEntity.setInventory(list);

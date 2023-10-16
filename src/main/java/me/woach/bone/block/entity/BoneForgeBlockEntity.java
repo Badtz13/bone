@@ -1,7 +1,6 @@
-package me.woach.bone.blocks;
+package me.woach.bone.block.entity;
 
-import me.woach.bone.Bone;
-import me.woach.bone.items.EssenceItemRegistry;
+import me.woach.bone.items.TagsRegistry;
 import me.woach.bone.networking.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
@@ -18,16 +17,20 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     private final DefaultedList<ItemStack> boneAndTool = DefaultedList.ofSize(2, ItemStack.EMPTY);
-
-    private short EssenceLevel = 0;
     public static final int BONE_SLOT = 1;
     public static final int TOOL_SLOT = 0;
 
     public BoneForgeBlockEntity(BlockPos pos, BlockState state) {
-        super(Bone.BONE_FORGE_BLOCK_ENTITY, pos, state);
+        super(BlockEntityTypesRegistry.BONE_FORGE_BLOCK_ENTITY.get(), pos, state);
+    }
+
+    public boolean attemptToForge(World world, BlockPos pos) {
+        // TODO: Check if there is a bone, tool, and fire essence to forge with, if there is then forge.
+        return false;
     }
 
     public ItemStack getRenderStack() {
@@ -39,31 +42,6 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
             boneAndTool.set(i, list.get(i));
         }
         markDirty();
-    }
-
-    private short levelFromEssence(ItemStack essence) {
-        if (essence.isOf(EssenceItemRegistry.JORD))
-            return 1;
-        if (essence.isOf(EssenceItemRegistry.AEGIR))
-            return 2;
-        if (essence.isOf(EssenceItemRegistry.STJARNA))
-            return 3;
-        return 0;
-    }
-
-    public void setEssenceLevel(ItemStack essence) {
-        assert canFuelBoneforge(essence);
-        EssenceLevel = levelFromEssence(essence);
-        markDirty();
-    }
-
-    public void resetEssenceLevel() {
-        EssenceLevel = 0;
-        markDirty();
-    }
-
-    public short getEssenceLevel() {
-        return EssenceLevel;
     }
 
     public void markDirty() {
@@ -83,16 +61,16 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
         super.markDirty();
     }
 
-    public boolean isBoneforgable(ItemStack stack) {
-        return stack.isIn(Bone.CAN_BONEFORGE);
+    public static boolean isBoneforgable(ItemStack stack) {
+        return stack.isIn(TagsRegistry.CAN_BONEFORGE);
     }
 
-    public boolean isBone(ItemStack stack) {
-        return stack.isIn(Bone.CAN_BONE);
+    public static boolean isBone(ItemStack stack) {
+        return stack.isIn(TagsRegistry.CAN_BONE);
     }
 
-    public boolean canFuelBoneforge(ItemStack stack) {
-        return stack.isIn(Bone.CAN_FUEL_BONEFORGE);
+    public static boolean canFuelBoneforge(ItemStack stack) {
+        return stack.isIn(TagsRegistry.CAN_FUEL_BONEFORGE);
     }
 
     @Override
@@ -102,7 +80,6 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
     @Override
     protected void writeNbt(NbtCompound nbt) {
-        nbt.putShort("EssenceLevel", EssenceLevel);
         Inventories.writeNbt(nbt, boneAndTool);
         super.writeNbt(nbt);
     }
@@ -111,7 +88,6 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         Inventories.readNbt(nbt, boneAndTool);
-        EssenceLevel = nbt.getShort("EssenceLevel");
     }
 
     @Override

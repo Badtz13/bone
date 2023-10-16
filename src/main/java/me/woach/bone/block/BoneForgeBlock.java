@@ -1,5 +1,6 @@
-package me.woach.bone.blocks;
+package me.woach.bone.block;
 
+import me.woach.bone.block.entity.BoneForgeBlockEntity;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
@@ -19,6 +20,7 @@ import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
+@SuppressWarnings("deprecation")
 public class BoneForgeBlock extends Block implements BlockEntityProvider {
     public BoneForgeBlock() {
         super(FabricBlockSettings.create().pistonBehavior(PistonBehavior.BLOCK).strength(4.0f).requiresTool()
