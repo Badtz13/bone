@@ -1,8 +1,6 @@
 package me.woach.bone.block.entity;
 
-import me.woach.bone.items.EssenceItem;
 import me.woach.bone.items.TagsRegistry;
-import me.woach.bone.items.ItemsRegistry;
 import me.woach.bone.networking.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
