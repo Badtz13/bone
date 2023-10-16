@@ -8,7 +8,8 @@ import net.minecraft.registry.Registry;
 import java.util.function.Supplier;
 
 public enum BlocksRegistry {
-    BONE_FORGE_BLOCK("bone_forge", BoneForgeBlock::new);
+    BONE_FORGE_BLOCK("bone_forge", BoneForgeBlock::new),
+    BONE_FIRE_BLOCK("bone_fire", BoneFireBlock::new);
 
     private final String path;
     private final Supplier<Block> blockSupplier;

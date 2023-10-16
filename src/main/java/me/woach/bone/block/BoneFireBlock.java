@@ -1,6 +1,10 @@
-package me.woach.bone.blocks;
+package me.woach.bone.block;
 
 import me.woach.bone.Bone;
+import me.woach.bone.block.entity.BlockEntityTypesRegistry;
+import me.woach.bone.block.entity.BoneForgeBlockEntity;
+import me.woach.bone.items.EssenceItem;
+import me.woach.bone.items.ItemsRegistry;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -23,36 +27,23 @@ import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
+import net.minecraft.world.WorldView;
 
+@SuppressWarnings("deprecation")
 public class BoneFireBlock extends Block {
-
-    public enum FireType implements StringIdentifiable {
-        JORD("jord"),
-        AEGIR("aegir"),
-        STJARNA("stjarna");
-
-        private final String name;
-
-        FireType(String name) {
-            this.name = name;
-        }
-
-        @Override
-        public String asString() {
-            return this.name;
-        }
-    }
-
-    public static final EnumProperty<FireType> TYPE = EnumProperty.of("type", FireType.class);
-
-    protected static final VoxelShape BASE_SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
+    public static final EnumProperty<EssenceItem.Types> TYPE = EnumProperty.of("type", EssenceItem.Types.class);
     private final float damage;
 
     public BoneFireBlock() {
         super(AbstractBlock.Settings.create().mapColor(MapColor.YELLOW).replaceable().noCollision().breakInstantly()
-                .luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY));
+                .luminance(state -> 15).sounds(BlockSoundGroup.WOOL).pistonBehavior(PistonBehavior.DESTROY).nonOpaque());
         this.damage = 2;
-        setDefaultState(getStateManager().getDefaultState().with(TYPE, FireType.JORD));
+        setDefaultState(getStateManager().getDefaultState().with(TYPE, EssenceItem.Types.EMPTY));
+    }
+
+    public BlockState getEssenceState(ItemStack essence) {
+        EssenceItem.Types type = EssenceItem.itemStackToTypes(essence);
+        return getStateManager().getDefaultState().with(TYPE, type);
     }
 
     @Override
@@ -62,33 +53,27 @@ public class BoneFireBlock extends Block {
 
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        return BASE_SHAPE;
+        return Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 1.0, 16.0);
+    }
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        return world.getBlockState(pos.down()).isSolidBlock(world,pos);
     }
 
-    private boolean checkConsumptionParameters(World world, Entity entity, BlockPos pos) {
-        BlockEntity be = world.getBlockEntity(pos.up());
-        if (be == null || !be.getType().equals(Bone.BONE_FORGE_BLOCK_ENTITY))
-            return false;
-        BoneForgeBlockEntity forge = (BoneForgeBlockEntity) be;
-        if (!entity.getType().equals(EntityType.ITEM))
-            return false;
-        ItemEntity item = (ItemEntity) entity;
-        ItemStack essence = item.getStack();
-        return forge.canFuelBoneforge(essence);
-    }
-
-    public void convertToFire(World world, BlockPos pos) {
+    public static void convertToFire(World world, BlockPos pos) {
         // TODO: IF SOULSAND IS UNDERNEATH THE BLOCK, MAKE IT SOUL FIRE INSTEAD
         world.setBlockState(pos, Blocks.FIRE.getDefaultState());
     }
 
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
-        if (checkConsumptionParameters(world, entity, pos)) {
-            BoneForgeBlockEntity forge = (BoneForgeBlockEntity) world.getBlockEntity(pos.up());
-            ItemStack essence = ((ItemEntity) entity).getStack();
-            forge.setEssenceLevel(essence);
-            entity.discard();
+        if (entity.getType().equals(EntityType.ITEM)) {
+            ItemEntity item = (ItemEntity) entity;
+            ItemStack essence = item.getStack();
+            if (BoneForgeBlockEntity.canFuelBoneforge(essence)) {
+                world.setBlockState(pos, getEssenceState(essence));
+                entity.discard();
+            }
         }
         if (!entity.isFireImmune()) {
             entity.setFireTicks(entity.getFireTicks() + 1);
@@ -102,14 +87,11 @@ public class BoneFireBlock extends Block {
 
     @Override
     public void onBreak(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-        BlockEntity be = world.getBlockEntity(pos.up());
-        if (be != null && be.getType().equals(Bone.BONE_FORGE_BLOCK_ENTITY)) {
-            BoneForgeBlockEntity forge = (BoneForgeBlockEntity) be;
-            forge.resetEssenceLevel();
-        }
+        // POTENTIALLY NEED TO ADD LOGIC HERE IF BONEFORGE USES AN ANIMATION
         if (!world.isClient()) {
             world.syncWorldEvent(null, WorldEvents.FIRE_EXTINGUISHED, pos, 0);
         }
         super.onBreak(world, pos, state, player);
     }
+
 }

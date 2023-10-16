@@ -38,9 +38,9 @@ public enum ItemsRegistry {
     LAPIS_DUST("lapis_dust", ItemBuilder::newItemDust),
     EMERALD_DUST("emerald_dust", ItemBuilder::newItemDust),
     DIAMOND_DUST("diamond_dust", ItemBuilder::newItemDust),
-    JORD("jord", ItemBuilder::newItemEssence),
-    AEGIR("aegir", ItemBuilder::newItemEssence),
-    STJARNA("stjarna", ItemBuilder::newItemEssence);
+    JORD("jord", EssenceItem::new),
+    AEGIR("aegir", EssenceItem::new),
+    STJARNA("stjarna", EssenceItem::new);
 
     private final String path;
     private final Supplier<Item> itemSupplier;
@@ -78,10 +78,6 @@ public enum ItemsRegistry {
     }
 
     private static class ItemBuilder {
-        protected static Item newItemEssence() {
-            return new Item(new FabricItemSettings().maxCount(16).rarity(Rarity.EPIC));
-        }
-
         protected static Item newItemDust() {
             return new Item(new FabricItemSettings().maxCount(16).rarity(Rarity.EPIC));
         }
