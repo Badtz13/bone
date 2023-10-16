@@ -26,33 +26,37 @@ public class BoneForgeBlock extends Block implements BlockEntityProvider {
         super(FabricBlockSettings.create().pistonBehavior(PistonBehavior.BLOCK).strength(4.0f).requiresTool()
                 .luminance(8).sounds(BlockSoundGroup.STONE));
     }
+
     @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView view, BlockPos pos, ShapeContext context) {
         return VoxelShapes.union(
                 VoxelShapes.cuboid(0.00f, 0.375f, 0.00f, 1.00f, 0.75f, 1.00f));
     }
 
-//    public static boolean isAlit(WorldAccess world, BlockPos pos) {
-//        BlockPos below = pos.down();
-//    }
+    // public static boolean isAlit(WorldAccess world, BlockPos pos) {
+    // BlockPos below = pos.down();
+    // }
 
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (world.isClient) return ActionResult.SUCCESS;
+    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
+            BlockHitResult hit) {
+        if (world.isClient)
+            return ActionResult.SUCCESS;
         BoneForgeBlockEntity blockEntity = (BoneForgeBlockEntity) world.getBlockEntity(pos);
         assert blockEntity != null;
 
         ItemStack playersItem = player.getStackInHand(hand);
         if (!playersItem.isEmpty()) {
             // Try to put tool into forge
-            if(blockEntity.isBoneforgable(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.TOOL_SLOT).isEmpty()) {
+            if (blockEntity.isBoneforgable(playersItem)
+                    && blockEntity.getStack(BoneForgeBlockEntity.TOOL_SLOT).isEmpty()) {
                 blockEntity.setStack(BoneForgeBlockEntity.TOOL_SLOT, playersItem.copy());
                 playersItem.setCount(0);
                 return ActionResult.SUCCESS;
             }
 
             // Try to put bone into forge
-            if(blockEntity.isBone(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.BONE_SLOT).isEmpty()) {
+            if (blockEntity.isBone(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.BONE_SLOT).isEmpty()) {
                 blockEntity.setStack(BoneForgeBlockEntity.BONE_SLOT, playersItem.copyWithCount(1));
                 if (!player.getAbilities().creativeMode) {
                     playersItem.decrement(1);

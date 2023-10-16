@@ -2,7 +2,7 @@
     "type": "minecraft:crafting_shaped",
     "pattern": [
         "SLG",
-        "ABA",
+        "EBE",
         "GLS"
     ],
     "key": {
@@ -15,8 +15,8 @@
         "G": {
             "tag": "bone:underwater_grass"
         },
-        "A": {
-            "item": "bone:amethyst_dust"
+        "E": {
+            "item": "bone:emerald_dust"
         },
         "B": {
             "item": "minecraft:bowl"

@@ -1,9 +1,9 @@
 {
     "type": "minecraft:crafting_shaped",
     "pattern": [
-        "SLG",
-        "ABA",
-        "GLS"
+        "GAS",
+        "LBL",
+        "SAG"
     ],
     "key": {
         "S": {
