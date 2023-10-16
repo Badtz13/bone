@@ -85,6 +85,16 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 	}
 }
 
+task copyTask(type: Copy) {
+    from 'build/libs'
+    include 'bone-1.0.0.jar'
+    into '/home/badtz/.config/gdlauncher_next/instances/bone modpack/mods'
+}
+
+if (System.getProperty('user.name').equals('badtz')) {
+    build.finalizedBy copyTask
+}
+
 java {
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
