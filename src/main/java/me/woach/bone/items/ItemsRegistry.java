@@ -18,6 +18,7 @@ import net.minecraft.item.HoeItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -37,7 +38,7 @@ public enum ItemsRegistry {
     BONESTEEL_AXE("bonesteel_axe", () -> ItemBuilder.newToolItem(AxeItem::new, 6.0f, -2.9f)),
     BONESTEEL_SHOVEL("bonesteel_shovel", () -> ItemBuilder.newToolItem(ShovelItem::new, 1.5F, -3.0F)),
     BONESTEEL_HOE("bonesteel_hoe", () -> ItemBuilder.newToolItem(HoeItem::new, -1, -1.0F)),
-    BONESTEEL_SWORD("bonesteel_sword", () -> ItemBuilder.newToolItem(HoeItem::new, 3, -2.2F)),
+    BONESTEEL_SWORD("bonesteel_sword", () -> ItemBuilder.newToolItem(SwordItem::new, 3, -2.2F)),
     AMETHYST_DUST("amethyst_dust", ItemBuilder::newItemDust),
     LAPIS_DUST("lapis_dust", ItemBuilder::newItemDust),
     EMERALD_DUST("emerald_dust", ItemBuilder::newItemDust),

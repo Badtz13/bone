@@ -3,8 +3,6 @@
     "values": [
         "minecraft:kelp",
         "minecraft:seagrass",
-        "minecraft:melon_seeds",
-        "minecraft:sea_pickle",
-        "minecraft:torchflower_seeds"
+        "minecraft:sea_pickle"
     ]
 }
