@@ -1,5 +1,6 @@
 package me.woach.bone.block;
 
+import me.woach.bone.block.entity.BlockEntityTypesRegistry;
 import me.woach.bone.block.entity.BoneForgeBlockEntity;
 import me.woach.bone.items.EssenceItem;
 import net.minecraft.block.AbstractBlock;
@@ -8,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.ShapeContext;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -64,15 +66,30 @@ public class BoneFireBlock extends Block {
         world.setBlockState(pos, Blocks.FIRE.getDefaultState());
     }
 
+    public static void essenceCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+        ItemEntity item = (ItemEntity) entity;
+        ItemStack essence = item.getStack();
+        if (BoneForgeBlockEntity.canFuelBoneforge(essence)) {
+            world.setBlockState(pos,
+                    ((BoneFireBlock) BlocksRegistry.BONE_FIRE_BLOCK.get()).getEssenceState(essence));
+            entity.discard();
+
+            // Update bone forge to match
+            BlockEntity aboveFire = world.getBlockEntity(pos.up());
+            if (aboveFire != null && aboveFire.getType().equals(BlockEntityTypesRegistry.BONE_FORGE_BLOCK_ENTITY.get())) {
+                BoneForgeBlockEntity forge = (BoneForgeBlockEntity) aboveFire;
+
+                // If the forging works, then convert the BoneFireBlock to a regular fire
+                if (forge.attemptToForge())
+                    BoneFireBlock.convertToFire(world, pos);
+            }
+        }
+    }
+
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity.getType().equals(EntityType.ITEM)) {
-            ItemEntity item = (ItemEntity) entity;
-            ItemStack essence = item.getStack();
-            if (BoneForgeBlockEntity.canFuelBoneforge(essence)) {
-                world.setBlockState(pos, getEssenceState(essence));
-                entity.discard();
-            }
+            essenceCollision(state, world, pos, entity);
         }
         if (!entity.isFireImmune()) {
             entity.setFireTicks(entity.getFireTicks() + 1);
