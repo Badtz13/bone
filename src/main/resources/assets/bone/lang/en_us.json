@@ -1,6 +1,6 @@
 {
     "block.bone.bone_forge": "Bone Forge",
-    "block.bone.charcoal_block": "Block of Charcoal",
+    "block.bone.firewood_block": "Bundle of Firewood",
     "block.bone.bone_fire": "Bone Fire",
     "block.bone.bone_fire.type=jord": "Jord Fire",
     "block.bone.bone_fire.type=aegir": "Aegir Fire",
@@ -22,5 +22,6 @@
     "item.bone.bonesteel_leggings": "Bonesteel Leggings",
     "item.bone.bonesteel_boots": "Bonesteel Boots",
     "item.bone.bone": "Bone",
-    "itemGroup.bone.bone": "Bone"
+    "itemGroup.bone.bone": "Bone",
+    "item.bone.tier": "Tier %s"
 }
