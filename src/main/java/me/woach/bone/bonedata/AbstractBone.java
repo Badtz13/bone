@@ -19,6 +19,8 @@ public class AbstractBone {
     private final Identifier dropEntity;
     private final Random rng = Random.create();
 
+    public static String BONE_NBT_ID = "MobSource";
+
     public AbstractBone(boolean enabled, int chance,
                         BoneEffect effect, Identifier dropEntity) {
         this.enabled = enabled;
@@ -37,7 +39,7 @@ public class AbstractBone {
         ItemStack boneToDrop = new ItemStack(ItemsRegistry.BONE_ITEM.get());
 
         NbtCompound nbtData = new NbtCompound();
-        nbtData.putString("MobSource", dropEntity.toString());
+        nbtData.putString(BONE_NBT_ID, dropEntity.toString());
 
         boneToDrop.setNbt(nbtData);
 

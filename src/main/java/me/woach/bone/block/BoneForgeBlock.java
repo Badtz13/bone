@@ -33,10 +33,6 @@ public class BoneForgeBlock extends Block implements BlockEntityProvider {
                 VoxelShapes.cuboid(0.00f, 0.375f, 0.00f, 1.00f, 0.75f, 1.00f));
     }
 
-    // public static boolean isAlit(WorldAccess world, BlockPos pos) {
-    // BlockPos below = pos.down();
-    // }
-
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand,
             BlockHitResult hit) {
@@ -48,15 +44,15 @@ public class BoneForgeBlock extends Block implements BlockEntityProvider {
         ItemStack playersItem = player.getStackInHand(hand);
         if (!playersItem.isEmpty()) {
             // Try to put tool into forge
-            if (blockEntity.isBoneforgable(playersItem)
-                    && blockEntity.getStack(BoneForgeBlockEntity.TOOL_SLOT).isEmpty()) {
-                blockEntity.setStack(BoneForgeBlockEntity.TOOL_SLOT, playersItem.copy());
+            if (BoneForgeBlockEntity.isBoneforgable(playersItem)
+                    && blockEntity.getStack(BoneForgeBlockEntity.EQUIPMENT_SLOT).isEmpty()) {
+                blockEntity.setStack(BoneForgeBlockEntity.EQUIPMENT_SLOT, playersItem.copy());
                 playersItem.setCount(0);
                 return ActionResult.SUCCESS;
             }
 
             // Try to put bone into forge
-            if (blockEntity.isBone(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.BONE_SLOT).isEmpty()) {
+            if (BoneForgeBlockEntity.isBone(playersItem) && blockEntity.getStack(BoneForgeBlockEntity.BONE_SLOT).isEmpty()) {
                 blockEntity.setStack(BoneForgeBlockEntity.BONE_SLOT, playersItem.copyWithCount(1));
                 if (!player.getAbilities().creativeMode) {
                     playersItem.decrement(1);
@@ -73,10 +69,10 @@ public class BoneForgeBlock extends Block implements BlockEntityProvider {
             }
 
             // Then try to remove tool
-            blockItem = blockEntity.getStack(BoneForgeBlockEntity.TOOL_SLOT);
+            blockItem = blockEntity.getStack(BoneForgeBlockEntity.EQUIPMENT_SLOT);
             if (!blockItem.isEmpty()) {
                 player.getInventory().offerOrDrop(blockItem);
-                blockEntity.removeStack(BoneForgeBlockEntity.TOOL_SLOT);
+                blockEntity.removeStack(BoneForgeBlockEntity.EQUIPMENT_SLOT);
                 return ActionResult.SUCCESS;
             }
         }
