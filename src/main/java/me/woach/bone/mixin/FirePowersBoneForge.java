@@ -17,7 +17,7 @@ public class FirePowersBoneForge {
     @Inject(method = "onEntityCollision", at = @At("HEAD"))
     private void consumePowerUnderForge(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (entity.getType().equals(EntityType.ITEM)) {
-            BoneFireBlock.essenceCollision(state,world,pos,entity);
+            BoneFireBlock.essenceCollision(world,pos,entity);
         }
     }
 }

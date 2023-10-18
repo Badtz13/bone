@@ -66,7 +66,7 @@ public class BoneFireBlock extends Block {
         world.setBlockState(pos, Blocks.FIRE.getDefaultState());
     }
 
-    public static void essenceCollision(BlockState state, World world, BlockPos pos, Entity entity) {
+    public static void essenceCollision(World world, BlockPos pos, Entity entity) {
         ItemEntity item = (ItemEntity) entity;
         ItemStack essence = item.getStack();
         if (BoneForgeBlockEntity.canFuelBoneforge(essence)) {
@@ -89,7 +89,7 @@ public class BoneFireBlock extends Block {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity.getType().equals(EntityType.ITEM)) {
-            essenceCollision(state, world, pos, entity);
+            essenceCollision(world, pos, entity);
         }
         if (!entity.isFireImmune()) {
             entity.setFireTicks(entity.getFireTicks() + 1);
