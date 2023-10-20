@@ -4,6 +4,7 @@ import me.woach.bone.Bone;
 import me.woach.bone.block.BoneFireBlock;
 import me.woach.bone.bonedata.AbstractBone;
 import me.woach.bone.items.EssenceItem;
+import me.woach.bone.items.ItemsRegistry;
 import me.woach.bone.items.TagsRegistry;
 import me.woach.bone.networking.Packets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -21,6 +22,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Arm;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -45,6 +47,7 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
     private static short getEquipmentLevel(ItemStack equipment, String enchantId) {
         assert isBoneforgable(equipment);
+
         NbtCompound nbt = equipment.getNbt();
         if (nbt == null || nbt.get("bone_enchants") == null)
             return 0;
@@ -60,22 +63,13 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
         return 0;
     }
 
-    @Nullable
-    private static String getBoneId(ItemStack bone) {
-        assert isBone(bone);
-        NbtCompound nbt = bone.getNbt();
-        if (nbt == null || nbt.get(AbstractBone.BONE_NBT_ID) == null)
-            return null;
-        return nbt.getString(AbstractBone.BONE_NBT_ID);
-    }
-
     public boolean attemptToForge() {
         World world = this.getWorld();
         assert world != null;
 
         ItemStack bone = getStack(BONE_SLOT);
         if (bone.isEmpty()) return false;
-        String boneId = getBoneId(bone);
+        String boneId = AbstractBone.getBoneEnchantId(bone);
         ItemStack equipment = getStack(EQUIPMENT_SLOT);
         EssenceItem.Types essence = getEssence(world, this.pos);
         if (boneId == null || equipment.isEmpty() || essence == EssenceItem.Types.EMPTY)
@@ -83,16 +77,58 @@ public class BoneForgeBlockEntity extends BlockEntity implements Inventory {
 
         short equipmentLevel = getEquipmentLevel(equipment, boneId);
         if (equipmentLevel == 0 && essence == EssenceItem.Types.JORD)
-            return forge(essence, equipment, bone);
+            return forgeLvlZero(bone);
         if (equipmentLevel == 1 && essence == EssenceItem.Types.AEGIR)
-            return forge(essence, equipment, bone);
+            return forge(bone);
         if (equipmentLevel == 2 && essence == EssenceItem.Types.STJARNA)
-            return forge(essence, equipment, bone);
+            return forge(bone);
 
         return false;
     }
 
-    private boolean forge(EssenceItem.Types essence, ItemStack tool, ItemStack bone) {
+    private boolean forgeLvlZero(ItemStack bone) {
+        Bone.LOGGER.info("Correct things for forging have been placed");
+        return true;
+//        ItemStack equipment = getStack(EQUIPMENT_SLOT);
+//        Item convertable = convertToBonesteel(equipment.getItem());
+//        if (convertable == null)
+//            return false;
+//
+//
+//
+//        NbtCompound oldNbt = equipment.getNbt();
+//
+//        ItemStack newEquipment = new ItemStack(convertable);
+//        if (equipment.hasCustomName())
+//            newEquipment.setCustomName(equipment.getName());
+//
+//        return true;
+    }
+
+    @Nullable
+    private static Item convertToBonesteel(Item equipment) {
+        if (equipment instanceof ArmorItem armor) {
+            switch (armor.getType()) {
+                case HELMET -> { return ItemsRegistry.BONESTEEL_HELMET.get(); }
+                case CHESTPLATE -> { return ItemsRegistry.BONESTEEL_CHESTPLATE.get(); }
+                case LEGGINGS -> { return ItemsRegistry.BONESTEEL_LEGGINGS.get(); }
+                case BOOTS -> { return ItemsRegistry.BONESTEEL_BOOTS.get(); }
+            }
+        }
+        if (equipment instanceof PickaxeItem)
+            return ItemsRegistry.BONESTEEL_PICKAXE.get();
+        if (equipment instanceof AxeItem)
+            return ItemsRegistry.BONESTEEL_AXE.get();
+        if (equipment instanceof ShovelItem)
+            return ItemsRegistry.BONESTEEL_SHOVEL.get();
+        if (equipment instanceof HoeItem)
+            return ItemsRegistry.BONESTEEL_HOE.get();
+        if (equipment instanceof SwordItem)
+            return ItemsRegistry.BONESTEEL_SWORD.get();
+        return null;
+    }
+
+    private boolean forge(ItemStack bone) {
         Bone.LOGGER.info("Correct things for forging have been placed");
         return true;
     }

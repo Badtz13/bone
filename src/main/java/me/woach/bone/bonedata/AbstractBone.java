@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.function.Consumer;
@@ -15,25 +16,33 @@ import java.util.function.Consumer;
 public class AbstractBone {
     private final boolean enabled;
     private final int chance;
-    private final BoneEffect effect;
+    private final Identifier effect;
     private final Identifier dropEntity;
     private final Random rng = Random.create();
 
-    public static String BONE_NBT_ID = "MobSource";
+    private static final String BONE_NBT_ID = "MobSource";
 
     public AbstractBone(boolean enabled, int chance,
-                        BoneEffect effect, Identifier dropEntity) {
+                        Identifier effect, Identifier dropEntity) {
         this.enabled = enabled;
         this.chance = chance;
         this.effect = effect;
         this.dropEntity = dropEntity;
     }
 
-    public void tryDrop(short lootingLvl, Consumer<ItemStack> dropper) {
+    @Nullable
+    public static String getBoneEnchantId(ItemStack bone) {
+        NbtCompound nbt = bone.getNbt();
+        if (nbt == null || nbt.get(BONE_NBT_ID) == null)
+            return null;
+        return nbt.getString(BONE_NBT_ID);
+    }
+
+    public void tryDrop(int lootingLvl, Consumer<ItemStack> dropper) {
         if (!this.isEnabled())
             return;
 
-        if (!rollChance(lootingLvl))
+        if (!rollChance(lootingLvl+1))
             return;
 
         ItemStack boneToDrop = new ItemStack(ItemsRegistry.BONE_ITEM.get());
@@ -46,7 +55,7 @@ public class AbstractBone {
         dropper.accept(boneToDrop);
     }
 
-    private boolean rollChance(short lootingLvl) {
+    private boolean rollChance(int lootingLvl) {
         for (int i = 0; i < lootingLvl; i++) {
             if(rollChance())
                 return true;
@@ -90,15 +99,16 @@ public class AbstractBone {
             else
                 chance = checkChance.getAsInt();
 
-            String effectId = jsonObject.get("effect").getAsString();
-            BoneEffect effect = Bone.BONE_EFFECT_REGISTRY.get(Identifier.splitOn(effectId, Identifier.NAMESPACE_SEPARATOR));
+            Identifier effectId = Identifier.splitOn(
+                    jsonObject.get("effect").getAsString(), Identifier.NAMESPACE_SEPARATOR);
+            BoneEffect effect = Bone.BONE_EFFECT_REGISTRY.get(effectId);
             if(effect == null)
                 throw new JsonParseException("could not find effect " + effectId);
 
             String entityIdentifier = jsonObject.get("entity").getAsString();
             Identifier entity = Identifier.splitOn(entityIdentifier, Identifier.NAMESPACE_SEPARATOR);
 
-            return new AbstractBone(enabled, chance, effect, entity);
+            return new AbstractBone(enabled, chance, effectId, entity);
         }
     }
 }

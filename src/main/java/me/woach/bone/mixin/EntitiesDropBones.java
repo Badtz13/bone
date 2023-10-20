@@ -2,6 +2,8 @@ package me.woach.bone.mixin;
 
 import me.woach.bone.bonedata.AbstractBone;
 import me.woach.bone.bonedata.BoneRegistry;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -35,21 +37,7 @@ public abstract class EntitiesDropBones extends Entity {
         if (this.attackingPlayer == null || this.playerHitTimer <= 0)
             return;
 
-        short lootingLvl = 0;
-
-        // Check for enchantment levels
-        NbtCompound nbt = this.attackingPlayer.getMainHandStack().getNbt();
-        if (nbt != null && nbt.get("Enchantments") != null) {
-            NbtList enchants = (NbtList) nbt.get("Enchantments");
-            assert enchants != null;
-            for (NbtElement enchant : enchants) {
-                NbtCompound curr = (NbtCompound) enchant;
-                String id = curr.getString("id");
-                if (id.equals("minecraft:looting"))
-                    lootingLvl = curr.getShort("lvl");
-            }
-        }
-
+        int lootingLvl = EnchantmentHelper.getLooting(this.attackingPlayer);
         Identifier entityId = EntityType.getId(this.getType());
 
         // Check if entity is in BoneRegistry
