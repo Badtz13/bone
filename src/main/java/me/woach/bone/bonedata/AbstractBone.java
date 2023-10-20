@@ -2,10 +2,12 @@ package me.woach.bone.bonedata;
 
 import com.google.gson.*;
 import me.woach.bone.Bone;
-import me.woach.bone.effects.BoneEffect;
+import me.woach.bone.effects.BoneEffectRegistry;
 import me.woach.bone.items.ItemsRegistry;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.random.Random;
 import org.jetbrains.annotations.Nullable;
@@ -16,14 +18,14 @@ import java.util.function.Consumer;
 public class AbstractBone {
     private final boolean enabled;
     private final int chance;
-    private final Identifier effect;
+    private final Enchantment effect;
     private final Identifier dropEntity;
     private final Random rng = Random.create();
 
     private static final String BONE_NBT_ID = "MobSource";
 
     public AbstractBone(boolean enabled, int chance,
-                        Identifier effect, Identifier dropEntity) {
+                        Enchantment effect, Identifier dropEntity) {
         this.enabled = enabled;
         this.chance = chance;
         this.effect = effect;
@@ -101,14 +103,14 @@ public class AbstractBone {
 
             Identifier effectId = Identifier.splitOn(
                     jsonObject.get("effect").getAsString(), Identifier.NAMESPACE_SEPARATOR);
-            BoneEffect effect = Bone.BONE_EFFECT_REGISTRY.get(effectId);
+            Enchantment effect = Registries.ENCHANTMENT.get(effectId);
             if(effect == null)
                 throw new JsonParseException("could not find effect " + effectId);
 
             String entityIdentifier = jsonObject.get("entity").getAsString();
             Identifier entity = Identifier.splitOn(entityIdentifier, Identifier.NAMESPACE_SEPARATOR);
 
-            return new AbstractBone(enabled, chance, effectId, entity);
+            return new AbstractBone(enabled, chance, effect, entity);
         }
     }
 }

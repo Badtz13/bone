@@ -22,5 +22,6 @@
     "item.bone.bonesteel_leggings": "Bonesteel Leggings",
     "item.bone.bonesteel_boots": "Bonesteel Boots",
     "item.bone.bone": "Bone",
-    "itemGroup.bone.bone": "Bone"
+    "itemGroup.bone.bone": "Bone",
+    "enchantment.minecraft.looting": "Greed"
 }

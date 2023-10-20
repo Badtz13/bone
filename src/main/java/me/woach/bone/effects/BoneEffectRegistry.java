@@ -1,30 +1,35 @@
 package me.woach.bone.effects;
 
 import me.woach.bone.Bone;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.enchantment.LuckEnchantment;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
 import java.util.function.Supplier;
 
 public enum BoneEffectRegistry {
-    HOG("hog", Hog::new),
-    SWIFT_STREAM("swift_stream", SwiftStream::new);
+    GREED("greed", GreedEffect::new);
 
     private final String path;
-    private final Supplier<BoneEffect> effectSupplier;
-    private BoneEffect effect;
+    private final Supplier<Enchantment> effectSupplier;
+    private Enchantment effect;
 
-    BoneEffectRegistry(String path, Supplier<BoneEffect> effectSupplier) {
+    BoneEffectRegistry(String path, Supplier<Enchantment> effectSupplier) {
         this.path = path;
         this.effectSupplier = effectSupplier;
     }
 
     public static void registerAll() {
         for (BoneEffectRegistry effect : values()) {
-            Registry.register(Bone.BONE_EFFECT_REGISTRY, Bone.getId(effect.path), effect.get());
+            Registry.register(Registries.ENCHANTMENT, Bone.getId(effect.path), effect.get());
         }
     }
 
-    public BoneEffect get() {
+    public Enchantment get() {
         if (effect == null)
             effect = effectSupplier.get();
         return effect;

@@ -1,6 +1,6 @@
 {
     "enabled": true,
     "chance": 0.125,
-    "effect": "bone:greed",
+    "effect": "minecraft:looting",
     "entity": "minecraft:entities/pillager"
 }
